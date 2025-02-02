@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tobi's Cyberpunk Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="background-animation"></div>
+    <header class="hero">
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="container">
+            <h1 class="glitch" data-text="Tobi's Portfolio">Tobi's Portfolio</h1>
+            <p class="tagline">Full Stack Developer | JavaScript Expert | Problem Solver</p>
+            <div class="cta-buttons">
+                <button class="cta-button" id="download-resume">Download Resume</button>
+                <button class="cta-button" id="contact-button">Contact Me</button>
+            </div>
+        </div>
+    </header>
+
+    <section id="skills" class="skills-section">
+        <div class="container">
+            <h2 class="section-title">Technical Skills</h2>
+            <div id="skills-container" class="skills-grid">
+                <div class="skill-card" data-skill="JavaScript">
+                    <div class="skill-icon">JS</div>
+                    <div class="skill-name">JavaScript</div>
+                </div>
+                <div class="skill-card" data-skill="React">
+                    <div class="skill-icon">Re</div>
+                    <div class="skill-name">React</div>
+                </div>
+                <div class="skill-card" data-skill="Node.js">
+                    <div class="skill-icon">No</div>
+                    <div class="skill-name">Node.js</div>
+                </div>
+                <div class="skill-card" data-skill="Python">
+                    <div class="skill-icon">Py</div>
+                    <div class="skill-name">Python</div>
+                </div>
+                <div class="skill-card" data-skill="SQL">
+                    <div class="skill-icon">SQ</div>
+                    <div class="skill-name">SQL</div>
+                </div>
+                <div class="skill-card" data-skill="Git">
+                    <div class="skill-icon">Gi</div>
+                    <div class="skill-name">Git</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <form id="contact-form" class="contact-form">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="cta-button">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Tobi's Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
