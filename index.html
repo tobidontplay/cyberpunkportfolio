@@ -14,6 +14,7 @@
             <ul>
                 <li><a href="#home">Home</a></li>
                 <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
@@ -31,29 +32,216 @@
         <div class="container">
             <h2 class="section-title">Technical Skills</h2>
             <div id="skills-container" class="skills-grid">
-                <div class="skill-card" data-skill="JavaScript">
+                <div class="skill-card" data-skill="JavaScript" data-proficiency="98">
                     <div class="skill-icon">JS</div>
                     <div class="skill-name">JavaScript</div>
+                    <div class="proficiency-container">
+                        <div class="proficiency-percentage">98%</div>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" style="width: 98%"></div>
+                        </div>
+                        <div class="roadmap">
+                            <p>2022-2025: 3+ years of experience with JavaScript</p>
+                            <p>Expert in ES6+, async programming, and functional concepts</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-card" data-skill="React">
+                <div class="skill-card" data-skill="React" data-proficiency="95">
                     <div class="skill-icon">Re</div>
                     <div class="skill-name">React</div>
+                    <div class="proficiency-container">
+                        <div class="proficiency-percentage">95%</div>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" style="width: 95%"></div>
+                        </div>
+                        <div class="roadmap">
+                            <p>2022-2025: 3 years of building React applications</p>
+                            <p>Proficient with hooks, context API, and Redux</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-card" data-skill="Node.js">
+                <div class="skill-card" data-skill="Node.js" data-proficiency="94">
                     <div class="skill-icon">No</div>
                     <div class="skill-name">Node.js</div>
+                    <div class="proficiency-container">
+                        <div class="proficiency-percentage">94%</div>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" style="width: 94%"></div>
+                        </div>
+                        <div class="roadmap">
+                            <p>2022-2025: 3 years of server-side JavaScript</p>
+                            <p>Experience with Express, REST APIs, and microservices</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-card" data-skill="Python">
+                <div class="skill-card" data-skill="Python" data-proficiency="92">
                     <div class="skill-icon">Py</div>
                     <div class="skill-name">Python</div>
+                    <div class="proficiency-container">
+                        <div class="proficiency-percentage">92%</div>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" style="width: 92%"></div>
+                        </div>
+                        <div class="roadmap">
+                            <p>2023-2025: 2 years of Python development</p>
+                            <p>Skilled in Django, Flask, and data analysis with pandas</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-card" data-skill="SQL">
+                <div class="skill-card" data-skill="SQL" data-proficiency="96">
                     <div class="skill-icon">SQ</div>
                     <div class="skill-name">SQL</div>
+                    <div class="proficiency-container">
+                        <div class="proficiency-percentage">96%</div>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" style="width: 96%"></div>
+                        </div>
+                        <div class="roadmap">
+                            <p>2022-2025: 3 years working with databases</p>
+                            <p>Expert in PostgreSQL, MySQL, and complex query optimization</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="skill-card" data-skill="Git">
+                <div class="skill-card" data-skill="Git" data-proficiency="97">
                     <div class="skill-icon">Gi</div>
                     <div class="skill-name">Git</div>
+                    <div class="proficiency-container">
+                        <div class="proficiency-percentage">97%</div>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" style="width: 97%"></div>
+                        </div>
+                        <div class="roadmap">
+                            <p>2023-2025: 2 years of version control experience</p>
+                            <p>Advanced knowledge of branching strategies and CI/CD workflows</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="projects-section">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <!-- D-Frames Project -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">D-Frames</h3>
+                        <div class="project-links">
+                            <a href="https://d-frames.vercel.app" target="_blank" class="project-link">Live Demo</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-preview">
+                        <div class="project-image-container">
+                            <img src="https://placehold.co/600x400/252525/00ffff?text=D-Frames+Preview" alt="D-Frames Project Preview" class="project-image">
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <div class="project-description">
+                            <p>D-Frames is an e-commerce platform specializing in eyewear products with a seamless shopping experience.</p>
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li>Integrated payment portal (my first implementation)</li>
+                                <li>PostgreSQL database for robust product and user management</li>
+                                <li>Responsive design optimized for all devices</li>
+                                <li>Advanced filtering and search functionality</li>
+                            </ul>
+                            <h4>Challenges & Solutions:</h4>
+                            <p>Implementing the payment API integration presented unique challenges with transaction security and user flow. I developed a custom middleware solution to handle payment verification and order processing seamlessly.</p>
+                        </div>
+                        <div class="tech-chart-container">
+                            <h4>Technologies Used:</h4>
+                            <div class="tech-chart">
+                                <div class="tech-bar" data-tech="React" data-percentage="35">
+                                    <div class="tech-fill" style="width: 35%"></div>
+                                    <span class="tech-name">React</span>
+                                    <span class="tech-percentage">35%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="Node.js" data-percentage="25">
+                                    <div class="tech-fill" style="width: 25%"></div>
+                                    <span class="tech-name">Node.js</span>
+                                    <span class="tech-percentage">25%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="PostgreSQL" data-percentage="20">
+                                    <div class="tech-fill" style="width: 20%"></div>
+                                    <span class="tech-name">PostgreSQL</span>
+                                    <span class="tech-percentage">20%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="Payment APIs" data-percentage="15">
+                                    <div class="tech-fill" style="width: 15%"></div>
+                                    <span class="tech-name">Payment APIs</span>
+                                    <span class="tech-percentage">15%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="CSS/SCSS" data-percentage="5">
+                                    <div class="tech-fill" style="width: 5%"></div>
+                                    <span class="tech-name">CSS/SCSS</span>
+                                    <span class="tech-percentage">5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Midnight Shayo Project -->
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3 class="project-title">Midnight Shayo</h3>
+                        <div class="project-links">
+                            <a href="https://midnight-shayo.vercel.app" target="_blank" class="project-link">Live Demo</a>
+                            <a href="#" class="project-link">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-preview">
+                        <div class="project-image-container">
+                            <img src="https://placehold.co/600x400/252525/00ffff?text=Midnight+Shayo+Preview" alt="Midnight Shayo Project Preview" class="project-image">
+                        </div>
+                    </div>
+                    <div class="project-details">
+                        <div class="project-description">
+                            <p>Midnight Shayo is an innovative web application that showcases advanced front-end development techniques and interactive user experiences.</p>
+                            <h4>Key Features:</h4>
+                            <ul>
+                                <li>Dynamic content rendering with state-of-the-art animations</li>
+                                <li>Custom-built component library for consistent UI/UX</li>
+                                <li>Optimized performance with lazy loading and code splitting</li>
+                                <li>Comprehensive testing suite ensuring reliability</li>
+                            </ul>
+                            <h4>Challenges & Solutions:</h4>
+                            <p>Creating fluid animations while maintaining performance was a significant challenge. I implemented a custom animation framework that leverages hardware acceleration and optimized rendering cycles to achieve smooth 60fps animations even on mobile devices.</p>
+                        </div>
+                        <div class="tech-chart-container">
+                            <h4>Technologies Used:</h4>
+                            <div class="tech-chart">
+                                <div class="tech-bar" data-tech="JavaScript" data-percentage="40">
+                                    <div class="tech-fill" style="width: 40%"></div>
+                                    <span class="tech-name">JavaScript</span>
+                                    <span class="tech-percentage">40%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="React" data-percentage="30">
+                                    <div class="tech-fill" style="width: 30%"></div>
+                                    <span class="tech-name">React</span>
+                                    <span class="tech-percentage">30%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="Three.js" data-percentage="15">
+                                    <div class="tech-fill" style="width: 15%"></div>
+                                    <span class="tech-name">Three.js</span>
+                                    <span class="tech-percentage">15%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="CSS/SCSS" data-percentage="10">
+                                    <div class="tech-fill" style="width: 10%"></div>
+                                    <span class="tech-name">CSS/SCSS</span>
+                                    <span class="tech-percentage">10%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="WebGL" data-percentage="5">
+                                    <div class="tech-fill" style="width: 5%"></div>
+                                    <span class="tech-name">WebGL</span>
+                                    <span class="tech-percentage">5%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

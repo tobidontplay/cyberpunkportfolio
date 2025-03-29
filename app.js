@@ -60,6 +60,40 @@ const observer = new IntersectionObserver(
 
 skillCards.forEach((card) => {
   observer.observe(card)
+  
+  // Add click event listener to show proficiency charts
+  card.addEventListener("click", function() {
+    // Get the proficiency container for this card
+    const proficiencyContainer = this.querySelector(".proficiency-container")
+    
+    // Check if this card's proficiency chart is already active
+    const isActive = proficiencyContainer.classList.contains("active")
+    
+    // First, hide all proficiency containers
+    document.querySelectorAll(".proficiency-container").forEach(container => {
+      container.classList.remove("active")
+    })
+    
+    // If this card wasn't active before, make it active
+    if (!isActive) {
+      proficiencyContainer.classList.add("active")
+      
+      // Animate the proficiency fill
+      const proficiencyFill = proficiencyContainer.querySelector(".proficiency-fill")
+      const proficiency = this.getAttribute("data-proficiency")
+      
+      // Reset the width first to trigger animation
+      proficiencyFill.style.width = "0"
+      
+      // Force a reflow to ensure the animation works
+      void proficiencyFill.offsetWidth
+      
+      // Set the width to the proficiency percentage
+      setTimeout(() => {
+        proficiencyFill.style.width = `${proficiency}%`
+      }, 50)
+    }
+  })
 })
 
 // Resume download functionality
@@ -67,6 +101,47 @@ document.getElementById("download-resume").addEventListener("click", () => {
   // Replace with actual resume URL
   const resumeUrl = "path/to/your/resume.pdf"
   window.open(resumeUrl, "_blank")
+})
+
+// Projects section technology charts animation
+const techBars = document.querySelectorAll('.tech-bar')
+const techObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const techFill = entry.target.querySelector('.tech-fill')
+        const percentage = entry.target.getAttribute('data-percentage')
+        
+        // Reset width first
+        techFill.style.width = '0'
+        
+        // Force reflow
+        void techFill.offsetWidth
+        
+        // Animate to the percentage
+        setTimeout(() => {
+          techFill.style.width = `${percentage}%`
+        }, 100)
+        
+        // Unobserve after animation
+        techObserver.unobserve(entry.target)
+      }
+    })
+  },
+  {
+    threshold: 0.2,
+  }
+)
+
+techBars.forEach((bar) => {
+  techObserver.observe(bar)
+})
+
+// Contact button scrolls to contact section
+document.getElementById('contact-button').addEventListener('click', function() {
+  document.querySelector('#contact').scrollIntoView({
+    behavior: 'smooth'
+  })
 })
 
 // Contact form functionality
