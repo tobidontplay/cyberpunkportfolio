@@ -639,10 +639,45 @@ h1 {
   }
 }
 
+/* Passion Projects Section Styles */
+.passion-projects-section {
+  padding: 4rem 0;
+  background-color: rgba(15, 0, 20, 0.8);
+  position: relative;
+  overflow: hidden;
+}
+
+.passion-projects-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  z-index: 1;
+}
+
+.passion-projects-section::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--secondary-color), transparent);
+  z-index: 1;
+}
+
+.passion-projects-section .section-title {
+  color: var(--primary-color);
+  text-shadow: 0 0 10px var(--primary-color), 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
 /* Contact Section Styles */
 .contact-section {
   padding: 4rem 0;
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 .contact-form {
