@@ -166,7 +166,7 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
     message
   }
   
-  // Send the data to our serverless function
+  // Send the data to our Vercel API endpoint
   fetch('/api/contact-form', {
     method: 'POST',
     headers: {
