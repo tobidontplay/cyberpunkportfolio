@@ -12,6 +12,18 @@
     <title>Tobi's Portfolio | Tobiverse.com</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            // Initialize EmailJS with your public key
+            // You'll need to sign up at https://www.emailjs.com/ and replace this with your actual public key
+            emailjs.init("YOUR_PUBLIC_KEY");
+            // You'll also need to create:
+            // 1. An email service (Gmail) with ID: 'service_id'
+            // 2. An email template with ID: 'template_id'
+            // 3. A record email template with ID: 'record_template_id'
+        })();
+    </script>
     <script src="app.js" defer></script>
 </head>
 <body>
@@ -471,18 +483,12 @@
     <section id="contact" class="contact-section">
         <div class="container">
             <h2 class="section-title">Contact Me</h2>
-            <form action="https://formsubmit.co/tobiaribo@gmail.com" method="POST" class="contact-form">
-                <!-- FormSubmit.co configuration -->
-                <input type="hidden" name="_subject" value="New Portfolio Contact Submission">
-                <input type="hidden" name="_template" value="table">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://tobiverse.com/thanks.html">
-                
-                <!-- Form fields -->
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <textarea name="message" placeholder="Your Message" required></textarea>
+            <form id="contact-form" class="contact-form">
+                <input type="text" id="name" name="name" placeholder="Your Name" required>
+                <input type="email" id="email" name="email" placeholder="Your Email" required>
+                <textarea id="message" name="message" placeholder="Your Message" required></textarea>
                 <button type="submit" class="cta-button">Send Message</button>
+                <div id="form-status" class="form-status"></div>
             </form>
         </div>
     </section>
