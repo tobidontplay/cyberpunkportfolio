@@ -1,7 +1,12 @@
+// Import only what's needed for Vercel serverless functions
 const nodemailer = require('nodemailer');
-const ExcelJS = require('exceljs');
-const fs = require('fs');
-const path = require('path');
+
+// Load environment variables
+try {
+  require('dotenv').config();
+} catch (error) {
+  console.log('dotenv not loaded, using process.env directly');
+}
 
 // For Vercel, we'll use a different approach for storing submissions
 // since the filesystem is read-only in production
@@ -36,8 +41,7 @@ async function sendEmail(submission) {
   // Send email
   await transporter.sendMail(mailOptions);
   
-  // Send a copy to yourself as a backup/record (this serves as our "Excel" storage)
-  // The emails will be organized in your inbox and can be exported to Excel if needed
+  // Send a copy to yourself as a backup/record 
   let recordMailOptions = {
     from: process.env.EMAIL_USER,
     to: process.env.EMAIL_USER,
@@ -63,6 +67,7 @@ async function sendEmail(submission) {
   await transporter.sendMail(recordMailOptions);
 }
 
+// Vercel API route handler
 export default async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== 'POST') {
@@ -88,7 +93,7 @@ export default async function handler(req, res) {
     }
     
     try {
-      // Send email notification (which also stores a record)
+      // Send email notification 
       await sendEmail(submission);
       return res.status(200).json({ message: 'Form submission successful' });
     } catch (emailError) {

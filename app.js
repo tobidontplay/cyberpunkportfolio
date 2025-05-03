@@ -166,8 +166,8 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
     message
   }
   
-  // Send the data to our Vercel API endpoint
-  fetch('/api/contact-form', {
+  // Send the data to our new Vercel API endpoint
+  fetch('/api/contact', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -175,13 +175,23 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
     body: JSON.stringify(formData)
   })
   .then(response => {
-    return response.json().then(data => {
-      // If response is not ok, throw an error with the data
-      if (!response.ok) {
-        throw new Error(data.message || 'Unknown error occurred');
-      }
-      return data;
-    });
+    // Check if the response is JSON
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return response.json().then(data => {
+        // If response is not ok, throw an error with the data
+        if (!response.ok) {
+          throw new Error(data.message || 'Unknown error occurred');
+        }
+        return data;
+      });
+    } else {
+      // Handle non-JSON response (like HTML error pages)
+      return response.text().then(text => {
+        console.error('Received non-JSON response:', text.substring(0, 150) + '...');
+        throw new Error('Received non-JSON response from server. Check browser console for details.');
+      });
+    }
   })
   .then(data => {
     // Show success message
