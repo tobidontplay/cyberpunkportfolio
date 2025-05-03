@@ -159,6 +159,7 @@ h1 {
   60% {
     clip: rect(82px, 9999px, 31px, 0);
   }
+
   65% {
     clip: rect(54px, 9999px, 27px, 0);
   }
@@ -340,7 +341,7 @@ h1 {
 /* Projects Section Styles */
 .projects-section {
   padding: 4rem 0;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .projects-grid {
@@ -649,3 +650,59 @@ footer {
   }
 }
 
+
+/* Tech Pillars Styles */
+.tech-pillars {
+  display: flex;
+  justify-content: space-between;
+  margin: 1.5rem 0;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.tech-pillar {
+  flex: 1;
+  min-width: 200px;
+  background: linear-gradient(145deg, #0f0f0f, #1a1a1a);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.tech-pillar:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+}
+
+.tech-pillar-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+  margin-bottom: 0.8rem;
+  text-align: center;
+}
+
+.highlight-ai {
+  color: #00ffcc;
+  text-shadow: 0 0 10px rgba(0, 255, 204, 0.7);
+  position: relative;
+}
+
+.highlight-blockchain {
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+  position: relative;
+}
+
+.highlight-cloud {
+  color: #00ccff;
+  text-shadow: 0 0 10px rgba(0, 204, 255, 0.7);
+  position: relative;
+}
+
+.tech-pillar p {
+  font-size: 0.9rem;
+  text-align: center;
+  color: #cccccc;
+}
