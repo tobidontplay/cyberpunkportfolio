@@ -1,0 +1,71 @@
+OLUWATOBILOBA (TOBI) ARIBO
+📍 Abilene, TX | 📞 325-439-8422 | 📧 tobiaribo@gmail.com | 🌐 tobiverse.com
+
+-----------------------------------------------------------------------------------------
+
+OBJECTIVE:
+Motivated Computer Science student with expertise in full-stack development, blockchain, machine learning, and media production. Seeking a tech internship to apply skills in software development and data analytics, contributing to innovative projects while gaining professional experience.
+
+-----------------------------------------------------------------------------------------
+
+TECHNICAL SKILLS:
+- Programming: JavaScript (ES6+), Node.js, Java, Python
+- Frontend: React, Next.js, HTML/CSS/SCSS, Three.js, WebGL
+- Backend: Express, REST APIs, SQL (PostgreSQL/MySQL)
+- Blockchain: Solidity, Ethereum, ERC-721 contracts
+- ML/AI: TensorFlow.js, StyleGAN implementations
+- DevOps: AWS (EC2/S3/Lambda), Vercel, Git
+- Tools: Supabase, Tailwind CSS, Mapbox, GSAP, Adobe Creative Suite
+- Additional: Payment APIs, drone piloting, hardware management
+
+-----------------------------------------------------------------------------------------
+
+PROJECTS:
+
+FloodSpy (In Progress)
+- Real-time flood monitoring platform for Nigeria
+- Supabase data pipeline integration + ML risk prediction model
+- Tech: Next.js, Supabase, Tailwind CSS, Leaflet/Mapbox
+
+FloodSpy Weather (In Progress)
+- 3D meteorological data visualization platform
+- Optimized WebGL rendering engine
+- Tech: Three.js, React Three Fiber, GSAP
+
+NeuralNFT
+- AI-powered NFT platform with ERC-721 contracts
+- AWS-deployed React frontend with TensorFlow.js integration
+
+D-Frames
+- Full-stack e-commerce platform for custom frames
+- REST API with Node.js/Express + PostgreSQL optimization
+
+Midnight Shayo
+- Interactive 3D web application with WebGL animations
+- Performance optimization techniques implemented
+
+-----------------------------------------------------------------------------------------
+
+WORK EXPERIENCE:
+
+Media Department Assistant | Hardin Simmons University
+- Configured media equipment for events
+- Produced university photography/videography content
+- Drone operation + Adobe Creative Suite editing
+
+Website Manager | The Brand (HSU Student Newspaper)
+- Managed WordPress website + content updates
+- Implemented user engagement features
+
+-----------------------------------------------------------------------------------------
+
+EDUCATION:
+Bachelor of Science in Computer Science | Hardin Simmons University
+- Minor: Cybersecurity | Expected Graduation: May 2026
+- Honors Program | Early enrollment at age 16
+
+-----------------------------------------------------------------------------------------
+
+ACHIEVEMENTS:
+- Graduated high school at 16 (2nd in class)
+- Consistent academic excellence with early university admission

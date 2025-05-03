@@ -98,9 +98,17 @@ skillCards.forEach((card) => {
 
 // Resume download functionality
 document.getElementById("download-resume").addEventListener("click", () => {
-  // Replace with actual resume URL
-  const resumeUrl = "path/to/your/resume.pdf"
-  window.open(resumeUrl, "_blank")
+  const resumeUrl = "assets/Tobi_Aribo_Resume.txt"
+  
+  // Create a temporary anchor element
+  const downloadLink = document.createElement("a")
+  downloadLink.href = resumeUrl
+  downloadLink.download = "Tobi_Aribo_Resume.txt"
+  
+  // Append to the body, click it, and remove it
+  document.body.appendChild(downloadLink)
+  downloadLink.click()
+  document.body.removeChild(downloadLink)
 })
 
 // Projects section technology charts animation
