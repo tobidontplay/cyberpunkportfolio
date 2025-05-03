@@ -166,6 +166,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const categoryButtons = document.querySelectorAll('.skill-category-btn');
   const skillCards = document.querySelectorAll('.skill-card');
   
+  // Function to filter skills by category
+  function filterSkills(category) {
+    // Show/hide skill cards based on category
+    skillCards.forEach(card => {
+      if (category === 'all' || card.getAttribute('data-category') === category) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+  
   // Add click event to category buttons
   categoryButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -176,15 +188,10 @@ document.addEventListener('DOMContentLoaded', function() {
       button.classList.add('active');
       
       const category = button.getAttribute('data-category');
-      
-      // Show/hide skill cards based on category
-      skillCards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      filterSkills(category);
     });
   });
+  
+  // Initialize with frontend skills visible by default
+  filterSkills('frontend');
 });
