@@ -6,6 +6,7 @@
     <title>Tobi's Cyberpunk Portfolio</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="app.js" defer></script>
 </head>
 <body>
     <div id="background-animation"></div>
@@ -31,9 +32,17 @@
     <section id="skills" class="skills-section">
         <div class="container">
             <h2 class="section-title">Technical Skills</h2>
+            <div class="skills-categories">
+                <button class="skill-category-btn active" data-category="all">All</button>
+                <button class="skill-category-btn" data-category="frontend">Frontend</button>
+                <button class="skill-category-btn" data-category="backend">Backend</button>
+                <button class="skill-category-btn" data-category="blockchain">Blockchain</button>
+                <button class="skill-category-btn" data-category="ai">AI</button>
+                <button class="skill-category-btn" data-category="cloud">Cloud</button>
+            </div>
             <div id="skills-container" class="skills-grid">
                 <!-- Frontend Skills -->
-                <div class="skill-card" data-skill="JavaScript" data-proficiency="98">
+                <div class="skill-card" data-skill="JavaScript" data-proficiency="98" data-category="frontend">
                     <div class="skill-icon">JS</div>
                     <div class="skill-name">JavaScript</div>
                     <div class="proficiency-container">
@@ -47,7 +56,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="skill-card" data-skill="React" data-proficiency="95">
+                <div class="skill-card" data-skill="React" data-proficiency="95" data-category="frontend">
                     <div class="skill-icon">Re</div>
                     <div class="skill-name">React</div>
                     <div class="proficiency-container">
@@ -61,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="skill-card" data-skill="CSS/SCSS" data-proficiency="92">
+                <div class="skill-card" data-skill="CSS/SCSS" data-proficiency="92" data-category="frontend">
                     <div class="skill-icon">CS</div>
                     <div class="skill-name">CSS/SCSS</div>
                     <div class="proficiency-container">
@@ -77,7 +86,7 @@
                 </div>
                 
                 <!-- Backend Skills -->
-                <div class="skill-card" data-skill="Node.js" data-proficiency="94">
+                <div class="skill-card" data-skill="Node.js" data-proficiency="94" data-category="backend">
                     <div class="skill-icon">No</div>
                     <div class="skill-name">Node.js</div>
                     <div class="proficiency-container">
@@ -91,7 +100,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="skill-card" data-skill="Express" data-proficiency="92">
+                <div class="skill-card" data-skill="Express" data-proficiency="92" data-category="backend">
                     <div class="skill-icon">Ex</div>
                     <div class="skill-name">Express</div>
                     <div class="proficiency-container">
@@ -107,7 +116,7 @@
                 </div>
                 
                 <!-- Blockchain Skills -->
-                <div class="skill-card" data-skill="Solidity" data-proficiency="90">
+                <div class="skill-card" data-skill="Solidity" data-proficiency="90" data-category="blockchain">
                     <div class="skill-icon">So</div>
                     <div class="skill-name">Solidity</div>
                     <div class="proficiency-container">
@@ -121,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="skill-card" data-skill="Ethereum" data-proficiency="88">
+                <div class="skill-card" data-skill="Ethereum" data-proficiency="88" data-category="blockchain">
                     <div class="skill-icon">Eth</div>
                     <div class="skill-name">Ethereum</div>
                     <div class="proficiency-container">
@@ -137,7 +146,7 @@
                 </div>
                 
                 <!-- AI Skills -->
-                <div class="skill-card" data-skill="TensorFlow.js" data-proficiency="85">
+                <div class="skill-card" data-skill="TensorFlow.js" data-proficiency="85" data-category="ai">
                     <div class="skill-icon">TF</div>
                     <div class="skill-name">TensorFlow.js</div>
                     <div class="proficiency-container">
@@ -151,7 +160,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="skill-card" data-skill="Python" data-proficiency="82">
+                <div class="skill-card" data-skill="Python" data-proficiency="82" data-category="ai">
                     <div class="skill-icon">Py</div>
                     <div class="skill-name">Python</div>
                     <div class="proficiency-container">
@@ -167,7 +176,7 @@
                 </div>
                 
                 <!-- Cloud Skills -->
-                <div class="skill-card" data-skill="AWS" data-proficiency="80">
+                <div class="skill-card" data-skill="AWS" data-proficiency="80" data-category="cloud">
                     <div class="skill-icon">AWS</div>
                     <div class="skill-name">AWS</div>
                     <div class="proficiency-container">
@@ -181,7 +190,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="skill-card" data-skill="Vercel" data-proficiency="92">
+                <div class="skill-card" data-skill="Vercel" data-proficiency="92" data-category="cloud">
                     <div class="skill-icon">Ve</div>
                     <div class="skill-name">Vercel</div>
                     <div class="proficiency-container">
@@ -445,3 +454,33 @@
 </body>
 </html>
 
+
+                <!-- New Skills: Java and HTML -->
+                <div class="skill-card" data-skill="Java" data-proficiency="85" data-category="backend">
+                    <div class="skill-icon">Ja</div>
+                    <div class="skill-name">Java</div>
+                    <div class="proficiency-container">
+                        <div class="proficiency-percentage">85%</div>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" style="width: 85%"></div>
+                        </div>
+                        <div class="roadmap">
+                            <p>2022-2025: 3 years of Java development</p>
+                            <p>Experience with Spring Boot and enterprise applications</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card" data-skill="HTML" data-proficiency="96" data-category="frontend">
+                    <div class="skill-icon">HT</div>
+                    <div class="skill-name">HTML</div>
+                    <div class="proficiency-container">
+                        <div class="proficiency-percentage">96%</div>
+                        <div class="proficiency-bar">
+                            <div class="proficiency-fill" style="width: 96%"></div>
+                        </div>
+                        <div class="roadmap">
+                            <p>2023-2025: 2 years of semantic HTML development</p>
+                            <p>Expert in accessibility and SEO best practices</p>
+                        </div>
+                    </div>
+                </div>

@@ -160,3 +160,31 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
   this.reset()
 })
 
+
+// Skills Category Filtering
+document.addEventListener('DOMContentLoaded', function() {
+  const categoryButtons = document.querySelectorAll('.skill-category-btn');
+  const skillCards = document.querySelectorAll('.skill-card');
+  
+  // Add click event to category buttons
+  categoryButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Remove active class from all buttons
+      categoryButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Add active class to clicked button
+      button.classList.add('active');
+      
+      const category = button.getAttribute('data-category');
+      
+      // Show/hide skill cards based on category
+      skillCards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    });
+  });
+});
