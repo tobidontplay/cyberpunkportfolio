@@ -150,14 +150,51 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
   const name = document.getElementById("name").value
   const email = document.getElementById("email").value
   const message = document.getElementById("message").value
-
-  // Here you would typically send this data to a server
-  // For this example, we'll just log it to the console
-  console.log("Form submitted:", { name, email, message })
-
-  // You can replace this with actual form submission logic
-  alert("Thank you for your message! I will get back to you soon.")
-  this.reset()
+  const formStatus = document.getElementById("form-status")
+  const submitButton = this.querySelector('button[type="submit"]')
+  
+  // Disable the submit button and show loading state
+  submitButton.disabled = true
+  submitButton.textContent = 'Sending...'
+  formStatus.className = 'form-status'
+  formStatus.textContent = ''
+  
+  // Prepare the data
+  const formData = {
+    name,
+    email,
+    message
+  }
+  
+  // Send the data to our serverless function
+  fetch('/api/contact-form', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Show success message
+    formStatus.className = 'form-status success'
+    formStatus.textContent = 'Thank you for your message! I will get back to you soon.'
+    
+    // Reset the form
+    this.reset()
+  })
+  .catch(error => {
+    console.error('Error submitting form:', error)
+    
+    // Show error message
+    formStatus.className = 'form-status error'
+    formStatus.textContent = 'There was an error sending your message. Please try again later.'
+  })
+  .finally(() => {
+    // Re-enable the submit button
+    submitButton.disabled = false
+    submitButton.textContent = 'Send Message'
+  })
 })
 
 

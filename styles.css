@@ -344,6 +344,25 @@ h1 {
   background-color: rgba(0, 0, 0, 0.7);
 }
 
+.tech-pillars {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.tech-pillar {
+  background: rgba(0, 255, 255, 0.1);
+  border: 1px solid cyan;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  color: cyan;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 .projects-grid {
   display: flex;
   flex-direction: column;
@@ -765,4 +784,27 @@ footer {
     font-size: 2rem;
     margin-bottom: 0.7rem;
   }
+}
+
+/* Form Status Message */
+.form-status {
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 4px;
+    text-align: center;
+    display: none;
+}
+
+.form-status.success {
+    display: block;
+    background-color: rgba(0, 255, 128, 0.1);
+    border: 1px solid #00ff80;
+    color: #00ff80;
+}
+
+.form-status.error {
+    display: block;
+    background-color: rgba(255, 0, 128, 0.1);
+    border: 1px solid #ff0080;
+    color: #ff0080;
 }
