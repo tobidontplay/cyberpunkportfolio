@@ -341,7 +341,34 @@ h1 {
 /* Projects Section Styles */
 .projects-section {
   padding: 4rem 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(10, 10, 10, 0.8);
+}
+
+.work-in-progress {
+  font-size: 0.7rem;
+  background-color: var(--accent-color);
+  color: var(--background-color);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.75rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+  display: inline-block;
+  vertical-align: middle;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .tech-pillars {
