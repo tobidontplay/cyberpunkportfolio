@@ -159,56 +159,66 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
   formStatus.className = 'form-status'
   formStatus.textContent = ''
   
-  // Prepare the data for EmailJS
-  const templateParams = {
-    from_name: name,
-    from_email: email,
-    message: message,
-    to_name: 'Tobi',
-    reply_to: email
+  // Prepare the data for submission
+  const formData = {
+    name,
+    email,
+    message
   }
   
-  // Send the email using EmailJS
-  emailjs.send('service_id', 'template_id', templateParams)
-    .then(function(response) {
-      console.log('SUCCESS!', response.status, response.text);
-      
-      // Show success message
-      formStatus.className = 'form-status success'
-      formStatus.textContent = 'Thank you for your message! I will get back to you soon.'
-      
-      // Reset the form
-      document.getElementById("contact-form").reset()
-      
-      // Send a second email as a record with [RECORD] in the subject
-      const recordParams = {
-        from_name: name,
-        from_email: email,
-        message: message,
-        to_name: 'Tobi',
-        reply_to: email,
-        record: true,
-        date: new Date().toISOString()
-      }
-      
-      // Send the record email
-      return emailjs.send('service_id', 'record_template_id', recordParams)
-    })
-    .then(function(recordResponse) {
-      console.log('RECORD EMAIL SENT!', recordResponse.status, recordResponse.text);
-    })
-    .catch(function(error) {
-      console.error('FAILED...', error);
-      
-      // Show detailed error message
-      formStatus.className = 'form-status error'
-      formStatus.textContent = `Error: There was an error sending your message. Please try again later.`
-    })
-    .finally(function() {
-      // Re-enable the submit button
-      submitButton.disabled = false
-      submitButton.textContent = 'Send Message'
-    });
+  // Send the data to our serverless function
+  fetch('/api/submit-form', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+  .then(response => {
+    // Check if the response is JSON
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return response.json().then(data => {
+        // If response is not ok, throw an error with the data
+        if (!response.ok) {
+          throw new Error(data.message || 'Unknown error occurred');
+        }
+        return data;
+      });
+    } else {
+      // Handle non-JSON response (like HTML error pages)
+      return response.text().then(text => {
+        console.error('Received non-JSON response:', text.substring(0, 150) + '...');
+        throw new Error('Received non-JSON response from server. Check browser console for details.');
+      });
+    }
+  })
+  .then(data => {
+    // Show success message
+    formStatus.className = 'form-status success'
+    formStatus.textContent = 'Thank you for your message! I will get back to you soon.'
+    
+    // Reset the form
+    this.reset()
+    
+    // Log success for debugging
+    console.log('Form submitted successfully:', data)
+  })
+  .catch(error => {
+    console.error('Error submitting form:', error)
+    
+    // Show detailed error message
+    formStatus.className = 'form-status error'
+    formStatus.textContent = `Error: ${error.message || 'There was an error sending your message. Please try again later.'}`
+    
+    // Add debug info to console
+    console.log('Form submission error details:', error)
+  })
+  .finally(() => {
+    // Re-enable the submit button
+    submitButton.disabled = false
+    submitButton.textContent = 'Send Message'
+  })
 })
 
 

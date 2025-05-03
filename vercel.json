@@ -12,6 +12,10 @@
   ],
   "routes": [
     {
+      "src": "/api/submit-form",
+      "dest": "/api/submit-form.js"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "/api/$1"
     },
@@ -19,5 +23,8 @@
       "src": "/(.*)",
       "dest": "/$1"
     }
-  ]
+  ],
+  "env": {
+    "EMAIL_USER": "tobiaribo@gmail.com"
+  }
 }
