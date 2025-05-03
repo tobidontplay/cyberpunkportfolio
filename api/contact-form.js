@@ -78,19 +78,32 @@ export default async function handler(req, res) {
       return res.status(400).json({ message: 'Missing required fields' });
     }
     
-    // Send email notification (which also stores a record)
-    if (process.env.EMAIL_USER && process.env.EMAIL_PASS) {
-      await sendEmail(submission);
-    } else {
-      console.log('Email credentials not set. Skipping email sending.');
-      // For development, log the submission
-      console.log('Form submission:', submission);
+    // Check if email credentials are set
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('Email credentials not set. Check Vercel environment variables.');
+      return res.status(500).json({ 
+        message: 'Server configuration error: Email credentials not set', 
+        debug: 'Check EMAIL_USER and EMAIL_PASS environment variables in Vercel dashboard'
+      });
     }
     
-    return res.status(200).json({ message: 'Form submission successful' });
+    try {
+      // Send email notification (which also stores a record)
+      await sendEmail(submission);
+      return res.status(200).json({ message: 'Form submission successful' });
+    } catch (emailError) {
+      console.error('Email sending error:', emailError);
+      return res.status(500).json({ 
+        message: 'Failed to send email', 
+        error: emailError.message,
+        debug: 'Check Gmail settings and ensure you are using an App Password if 2FA is enabled'
+      });
+    }
   } catch (error) {
     console.error('Error processing form submission:', error);
-    
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({ 
+      message: 'Internal Server Error', 
+      error: error.message 
+    });
   }
 }

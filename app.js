@@ -174,7 +174,15 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
     },
     body: JSON.stringify(formData)
   })
-  .then(response => response.json())
+  .then(response => {
+    return response.json().then(data => {
+      // If response is not ok, throw an error with the data
+      if (!response.ok) {
+        throw new Error(data.message || 'Unknown error occurred');
+      }
+      return data;
+    });
+  })
   .then(data => {
     // Show success message
     formStatus.className = 'form-status success'
@@ -182,13 +190,19 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
     
     // Reset the form
     this.reset()
+    
+    // Log success for debugging
+    console.log('Form submitted successfully:', data)
   })
   .catch(error => {
     console.error('Error submitting form:', error)
     
-    // Show error message
+    // Show detailed error message
     formStatus.className = 'form-status error'
-    formStatus.textContent = 'There was an error sending your message. Please try again later.'
+    formStatus.textContent = `Error: ${error.message || 'There was an error sending your message. Please try again later.'}`
+    
+    // Add debug info to console
+    console.log('Form submission error details:', error)
   })
   .finally(() => {
     // Re-enable the submit button
