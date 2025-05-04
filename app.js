@@ -111,6 +111,117 @@ document.getElementById("download-resume").addEventListener("click", () => {
   document.body.removeChild(downloadLink)
 })
 
+// Ultra simple collapsible project cards
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize all toggle buttons
+  document.querySelectorAll('.toggle-btn').forEach(btn => {
+    const card = btn.closest('.project-card');
+    const content = card.querySelector('.project-content');
+    
+    if (!content) return;
+    
+    // Set initial state
+    btn.textContent = 'Preview';
+    btn.classList.remove('active');
+    content.classList.add('collapsed');
+    
+    // Add click handler
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation(); // Prevent event bubbling
+      
+      // First collapse all other cards
+      document.querySelectorAll('.project-card').forEach(otherCard => {
+        if (otherCard !== card) {
+          const otherContent = otherCard.querySelector('.project-content');
+          const otherBtn = otherCard.querySelector('.toggle-btn');
+          if (otherContent && !otherContent.classList.contains('collapsed')) {
+            otherContent.classList.add('collapsed');
+            otherBtn.classList.remove('active');
+            otherBtn.textContent = 'Preview';
+          }
+        }
+      });
+      
+      // Toggle this card
+      const isCollapsed = content.classList.contains('collapsed');
+      if (isCollapsed) {
+        content.classList.remove('collapsed');
+        this.classList.add('active');
+        this.textContent = 'Close';
+      } else {
+        content.classList.add('collapsed');
+        this.classList.remove('active');
+        this.textContent = 'Preview';
+      }
+    });
+  });
+  
+  // Also make headers clickable (except links)
+  document.querySelectorAll('.toggle-header').forEach(header => {
+    header.addEventListener('click', function(e) {
+      // Don't toggle if clicking on a link or button
+      if (e.target.tagName === 'A' || e.target.tagName === 'BUTTON' || 
+          e.target.closest('a') || e.target.closest('button')) {
+        return;
+      }
+      
+      // Find and click the toggle button
+      const btn = this.querySelector('.toggle-btn');
+      if (btn) btn.click();
+    });
+  });
+})
+
+// Added toggle handler for project cards
+function initProjectToggle() {
+  const toggleButtons = document.querySelectorAll('.toggle-btn');
+  toggleButtons.forEach(button => {
+    const card = button.closest('.project-card');
+    if (!card) {
+      console.error('Project card not found for button', button);
+      return;
+    }
+    const content = card.querySelector('.project-content');
+    if (!content) {
+      console.error('Project content not found for card', card);
+      return;
+    }
+
+    // Initialize state based on data-collapsed attribute
+    if (card.getAttribute('data-collapsed') === 'true') {
+      content.classList.add('hidden');
+      button.textContent = '+';
+    } else {
+      content.classList.remove('hidden');
+      button.textContent = '-';
+    }
+
+    button.addEventListener('click', () => {
+      console.log('Toggle button clicked:', button);
+      const isCollapsed = card.getAttribute('data-collapsed') === 'true';
+      console.log('Before toggle, isCollapsed:', isCollapsed);
+      if (isCollapsed) {
+        card.setAttribute('data-collapsed', 'false');
+        content.classList.remove('hidden');
+        button.textContent = '-';
+        console.log('Expanding project card');
+      } else {
+        card.setAttribute('data-collapsed', 'true');
+        content.classList.add('hidden');
+        button.textContent = '+';
+        console.log('Collapsing project card');
+      }
+      console.log('After toggle, data-collapsed:', card.getAttribute('data-collapsed'));
+    });
+  });
+}
+
+if (document.readyState !== 'loading') {
+  initProjectToggle();
+} else {
+  document.addEventListener('DOMContentLoaded', initProjectToggle);
+}
+
 // Projects section technology charts animation
 const techBars = document.querySelectorAll('.tech-bar')
 const techObserver = new IntersectionObserver(
@@ -228,20 +339,6 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
     submitButton.textContent = 'Send Message'
   })
 })
-
-// Collapsible Project Cards
-document.addEventListener('DOMContentLoaded', function() {
-  const projectToggles = document.querySelectorAll('.project-toggle');
-
-  projectToggles.forEach(toggle => {
-    toggle.addEventListener('click', function() {
-      const projectCard = this.closest('.project-card');
-      if (projectCard) {
-        projectCard.classList.toggle('collapsed');
-      }
-    });
-  });
-});
 
 // Skills Category Filtering
 document.addEventListener('DOMContentLoaded', function() {
