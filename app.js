@@ -125,6 +125,9 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.classList.remove('active');
     content.classList.add('collapsed');
     
+    // Force a reflow to ensure initial state is properly set
+    void content.offsetHeight;
+    
     // Add click handler
     btn.addEventListener('click', function(e) {
       e.stopPropagation(); // Prevent event bubbling
