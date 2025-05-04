@@ -113,20 +113,23 @@ document.getElementById("download-resume").addEventListener("click", () => {
 
 // Ultra simple collapsible project cards
 document.addEventListener('DOMContentLoaded', function() {
-  // Initialize all toggle buttons
-  document.querySelectorAll('.toggle-btn').forEach(btn => {
+  // Add repository links to all roadmap cards
+  addRepoLinksToRoadmaps();
+  
+  // Setup In Progress indicator links
+  setupInProgressLinks();
+  
+  // Initialize all toggle buttons for project cards
+  document.querySelectorAll('.project-card .toggle-btn').forEach(btn => {
     const card = btn.closest('.project-card');
     const content = card.querySelector('.project-content');
     
     if (!content) return;
     
     // Set initial state
-    btn.textContent = 'Preview';
+    btn.textContent = '+';
     btn.classList.remove('active');
-    content.classList.add('collapsed');
-    
-    // Force a reflow to ensure initial state is properly set
-    void content.offsetHeight;
+    content.style.display = 'none';
     
     // Add click handler
     btn.addEventListener('click', function(e) {
@@ -137,25 +140,66 @@ document.addEventListener('DOMContentLoaded', function() {
         if (otherCard !== card) {
           const otherContent = otherCard.querySelector('.project-content');
           const otherBtn = otherCard.querySelector('.toggle-btn');
-          if (otherContent && !otherContent.classList.contains('collapsed')) {
-            otherContent.classList.add('collapsed');
+          if (otherContent && otherContent.style.display !== 'none') {
+            otherContent.style.display = 'none';
             otherBtn.classList.remove('active');
-            otherBtn.textContent = 'Preview';
+            otherBtn.textContent = '+';
           }
         }
       });
       
       // Toggle this card
-      const isCollapsed = content.classList.contains('collapsed');
-      if (isCollapsed) {
-        content.classList.remove('collapsed');
+      if (content.style.display === 'none') {
+        content.style.display = 'block';
         this.classList.add('active');
-        this.textContent = 'Close';
+        this.textContent = '-';
       } else {
-        content.classList.add('collapsed');
+        content.style.display = 'none';
         this.classList.remove('active');
-        this.textContent = 'Preview';
+        this.textContent = '+';
       }
+    });
+  });
+  
+  // Initialize all toggle buttons for roadmap cards
+  document.querySelectorAll('.roadmap-card .toggle-btn').forEach(btn => {
+    const card = btn.closest('.roadmap-card');
+    const content = card.querySelector('.milestone-list');
+    
+    if (!content) return;
+    
+    // Set initial state
+    btn.textContent = '+';
+    btn.classList.remove('active');
+    content.style.display = 'none';
+    
+    // Add click handler
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation(); // Prevent event bubbling
+      
+      // Get current state of this card
+      const isExpanded = content.style.display !== 'none';
+      
+      // First collapse ALL roadmap cards (including this one)
+      document.querySelectorAll('.roadmap-card').forEach(anyCard => {
+        const anyContent = anyCard.querySelector('.milestone-list');
+        const anyBtn = anyCard.querySelector('.toggle-btn');
+        if (anyContent) {
+          anyContent.style.display = 'none';
+          if (anyBtn) {
+            anyBtn.classList.remove('active');
+            anyBtn.textContent = '+';
+          }
+        }
+      });
+      
+      // If this card was not expanded before, expand it now
+      if (!isExpanded) {
+        content.style.display = 'block';
+        this.classList.add('active');
+        this.textContent = '-';
+      }
+      // If it was already expanded, it will remain collapsed (already done above)
     });
   });
   
@@ -175,55 +219,13 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 })
 
-// Added toggle handler for project cards
-function initProjectToggle() {
-  const toggleButtons = document.querySelectorAll('.toggle-btn');
-  toggleButtons.forEach(button => {
-    const card = button.closest('.project-card');
-    if (!card) {
-      console.error('Project card not found for button', button);
-      return;
-    }
-    const content = card.querySelector('.project-content');
-    if (!content) {
-      console.error('Project content not found for card', card);
-      return;
-    }
+// Function to initialize project toggles - removed as it's now handled in the DOMContentLoaded event
 
-    // Initialize state based on data-collapsed attribute
-    if (card.getAttribute('data-collapsed') === 'true') {
-      content.classList.add('hidden');
-      button.textContent = '+';
-    } else {
-      content.classList.remove('hidden');
-      button.textContent = '-';
-    }
+// No need to call initProjectToggle as it's now handled in the DOMContentLoaded event
 
-    button.addEventListener('click', () => {
-      console.log('Toggle button clicked:', button);
-      const isCollapsed = card.getAttribute('data-collapsed') === 'true';
-      console.log('Before toggle, isCollapsed:', isCollapsed);
-      if (isCollapsed) {
-        card.setAttribute('data-collapsed', 'false');
-        content.classList.remove('hidden');
-        button.textContent = '-';
-        console.log('Expanding project card');
-      } else {
-        card.setAttribute('data-collapsed', 'true');
-        content.classList.add('hidden');
-        button.textContent = '+';
-        console.log('Collapsing project card');
-      }
-      console.log('After toggle, data-collapsed:', card.getAttribute('data-collapsed'));
-    });
-  });
-}
+// Removed duplicate initProjectToggle function
 
-if (document.readyState !== 'loading') {
-  initProjectToggle();
-} else {
-  document.addEventListener('DOMContentLoaded', initProjectToggle);
-}
+// No need for additional initialization as it's now handled in the DOMContentLoaded event
 
 // Projects section technology charts animation
 const techBars = document.querySelectorAll('.tech-bar')
@@ -232,7 +234,12 @@ const techObserver = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         const techFill = entry.target.querySelector('.tech-fill')
-        const percentage = entry.target.getAttribute('data-percentage')
+        const projectName = entry.target.getAttribute('data-project')
+        const techData = projectTechData[projectName]
+        const techKeys = Object.keys(techData)
+        const techValues = Object.values(techData)
+        const total = techValues.reduce((a, b) => a + b, 0)
+        const percentage = (techValues[0] / total) * 100
         
         // Reset width first
         techFill.style.width = '0'
@@ -342,6 +349,108 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
     submitButton.textContent = 'Send Message'
   })
 })
+
+// Make In Progress indicators link to specific roadmap sections
+function setupInProgressLinks() {
+  // Get all in-progress indicators
+  const inProgressLinks = document.querySelectorAll('.work-in-progress');
+  
+  inProgressLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      
+      // Get the project title from the parent element
+      const projectTitle = this.closest('.project-title').textContent.trim().split(' ')[0];
+      
+      // Find the corresponding roadmap card
+      const roadmapCards = document.querySelectorAll('.roadmap-card');
+      let targetCard = null;
+      
+      roadmapCards.forEach(card => {
+        const cardTitle = card.querySelector('.roadmap-title').textContent.trim();
+        if (cardTitle.includes(projectTitle)) {
+          targetCard = card;
+        }
+      });
+      
+      if (targetCard) {
+        // Scroll to the roadmap section
+        document.querySelector('#roadmap').scrollIntoView({
+          behavior: 'smooth'
+        });
+        
+        // Expand the specific roadmap card after a short delay
+        setTimeout(() => {
+          // First collapse all roadmap cards
+          document.querySelectorAll('.roadmap-card').forEach(card => {
+            const content = card.querySelector('.milestone-list');
+            const btn = card.querySelector('.toggle-btn');
+            if (content) {
+              content.style.display = 'none';
+            }
+            if (btn) {
+              btn.classList.remove('active');
+              btn.textContent = '+';
+            }
+          });
+          
+          // Then expand the target card
+          const content = targetCard.querySelector('.milestone-list');
+          const btn = targetCard.querySelector('.toggle-btn');
+          if (content) {
+            content.style.display = 'block';
+          }
+          if (btn) {
+            btn.classList.add('active');
+            btn.textContent = '-';
+          }
+        }, 500);
+      } else {
+        // If no specific card is found, just scroll to the roadmap section
+        document.querySelector('#roadmap').scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+}
+
+// Add repository links to roadmap cards
+function addRepoLinksToRoadmaps() {
+  // Repository URLs for each project
+  const repoUrls = {
+    'D-Frames': 'https://github.com/tobidontplay/d-frames',
+    'Midnight Shayo': 'https://github.com/tobidontplay/shayo-culture-vibes-web',
+    'FloodSpy': 'https://github.com/tobidontplay/floodspy',
+    'NeuralNFT': 'https://github.com/tobidontplay/NeuralNFT.git',
+    'FloodSpy Weather': 'https://github.com/tobidontplay/floodspyweather-'
+  };
+  
+  // Get all roadmap cards
+  const roadmapCards = document.querySelectorAll('.roadmap-card');
+  
+  // Add repo links to each card
+  roadmapCards.forEach(card => {
+    // Get the project title
+    const titleElement = card.querySelector('.roadmap-title');
+    if (!titleElement) return;
+    
+    const projectTitle = titleElement.textContent.trim();
+    const repoUrl = repoUrls[projectTitle];
+    
+    // Check if this card already has a repo link
+    const existingRepoLink = card.querySelector('.repo-link');
+    
+    // If there's no repo link and we have a URL for this project, add one
+    if (!existingRepoLink && repoUrl) {
+      const repoLink = document.createElement('a');
+      repoLink.href = repoUrl;
+      repoLink.className = 'repo-link';
+      repoLink.textContent = 'View Repository';
+      card.appendChild(repoLink);
+    }
+  });
+}
 
 // Skills Category Filtering
 document.addEventListener('DOMContentLoaded', function() {

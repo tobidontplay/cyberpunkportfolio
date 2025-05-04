@@ -12,8 +12,194 @@
     <title>Tobi's Portfolio | Tobiverse.com</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <!-- No external email service needed -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js" defer></script>
+    <style>
+        /* Roadmap Toggle Styles */
+        .roadmap-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+        }
+        
+        .roadmap-card .toggle-btn {
+            background: var(--accent-color);
+            color: var(--dark-bg);
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            font-size: 16px;
+            line-height: 1;
+            cursor: pointer;
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .roadmap-card .toggle-btn.active {
+            transform: rotate(45deg);
+        }
+        
+        .roadmap-card .roadmap-title {
+            flex: 1;
+        }
+        
+        .roadmap-card .project-status-text {
+            color: var(--accent-color);
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        
+        /* Initially hide milestone lists */
+        .roadmap-card[data-collapsed="true"] .milestone-list {
+            display: none;
+        }
+        
+        /* Mobile Enhancements */
+        @media screen and (max-width: 768px) {
+            /* Improved touch targets */
+            .toggle-btn, .project-links a, .toggle-header {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            /* Better spacing for mobile */
+            .container {
+                padding: 0 15px;
+            }
+            
+            /* Adjust project cards for mobile */
+            .project-card, .roadmap-card {
+                padding: 15px;
+                margin-bottom: 20px;
+            }
+            
+            /* Ensure project iframes are responsive */
+            .project-iframe {
+                height: 200px;
+            }
+            
+            /* Improve readability on small screens */
+            .project-description p, .milestone-desc {
+                font-size: 14px;
+                line-height: 1.5;
+            }
+            
+            /* Adjust tech charts for mobile */
+            .tech-pillars {
+                flex-direction: column;
+            }
+            
+            .tech-pillar {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            /* Make roadmap more compact on mobile */
+            .milestone {
+                padding: 10px;
+            }
+            
+            /* Improve navigation for mobile */
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            /* Ensure repo links are easy to tap */
+            .repo-link {
+                display: block;
+                text-align: center;
+                padding: 12px;
+                margin-top: 10px;
+            }
+            
+            /* Fix for potential overflow issues */
+            img, video, canvas {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+        
+        /* In Progress Indicator Styles */
+        .work-in-progress {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--dark-bg);
+            font-size: 0.8em;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin-left: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            top: -2px;
+        }
+        
+        .work-in-progress:hover {
+            background-color: #00e5ff;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 229, 255, 0.3);
+        }
+        
+        /* Small phone optimization */
+        @media screen and (max-width: 480px) {
+            .project-header, .roadmap-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .project-links, .project-status-text {
+                margin-top: 10px;
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+            }
+            
+            .toggle-btn {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+            }
+            
+            .roadmap-card .project-status-text {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+            
+            /* Adjust font sizes for very small screens */
+            h2.section-title {
+                font-size: 24px;
+            }
+            
+            h3.project-title, h3.roadmap-title {
+                font-size: 18px;
+                padding-right: 30px; /* Make room for the toggle button */
+            }
+            
+            /* Mobile-specific styles for in-progress indicator */
+            .work-in-progress {
+                display: block;
+                margin: 8px 0 0 0;
+                width: fit-content;
+                font-size: 0.7em;
+                padding: 3px 8px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="background-animation"></div>
@@ -23,6 +209,7 @@
                 <li><a href="#home">Home</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
                 <li><a href="#passion-projects">Passion Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -276,12 +463,83 @@
 
     <section id="projects" class="projects-section">
         <div class="container">
-            <h2 class="section-title">My Projects</h2>
+            <h2 class="section-title">Projects</h2>
             <div class="projects-grid">
+                <!-- Project Card 2: NeuralNFT -->
+                <div class="project-card" data-collapsed="true">
+                    <div class="project-header toggle-header">
+                        <h3 class="project-title">NeuralNFT <a href="#roadmap" class="work-in-progress">In Progress</a></h3>
+                        <div class="project-links">
+                            <a href="https://neural-nft.vercel.app" target="_blank" class="project-link">Live Demo</a>
+                            <a href="https://github.com/tobidontplay/NeuralNFT.git" target="_blank" class="project-link">GitHub</a>
+                            <button class="toggle-btn" aria-label="Toggle project details">+</button>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-preview">
+                            <div class="project-image-container">
+                                <iframe src="https://neural-nft.vercel.app" title="NeuralNFT Live Preview" class="project-iframe"></iframe>
+                            </div>
+                        </div>
+                        <div class="project-details">
+                            <div class="project-description">
+                                <p>An innovative NFT project leveraging AI for unique digital art generation.</p>
+                                <h4>Key Features:</h4>
+                                <ul>
+                                    <li>AI art generation using stable diffusion</li>
+                                    <li>NFT minting and marketplace</li>
+                                    <li>Wallet integration</li>
+                                    <li>Community features</li>
+                                </ul>
+                            </div>
+                            <div class="tech-chart-container">
+                                <h4>Technologies Used:</h4>
+                                <div class="tech-pillars">
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-ai">AI Generation</span></h4>
+                                        <p>Advanced machine learning algorithms for creating unique digital artwork based on user prompts</p>
+                                    </div>
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-blockchain">Blockchain Integration</span></h4>
+                                        <p>Secure NFT minting and marketplace powered by Ethereum smart contracts</p>
+                                    </div>
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-cloud">Cloud Infrastructure</span></h4>
+                                        <p>Scalable AWS-based architecture for handling image processing and storage</p>
+                                    </div>
+                                </div>
+                                <div class="tech-chart">
+                                    <div class="tech-bar" data-tech="TensorFlow.js" data-percentage="35">
+                                        <div class="tech-fill" style="width: 35%"></div>
+                                        <span class="tech-name">TensorFlow.js</span>
+                                        <span class="tech-percentage">35%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="Solidity" data-percentage="25">
+                                        <div class="tech-fill" style="width: 25%"></div>
+                                        <span class="tech-name">Solidity</span>
+                                        <span class="tech-percentage">25%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="React" data-percentage="20">
+                                        <div class="tech-fill" style="width: 20%"></div>
+                                        <span class="tech-name">React</span>
+                                        <span class="tech-percentage">20%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="AWS" data-percentage="20">
+                                        <div class="tech-fill" style="width: 20%"></div>
+                                        <span class="tech-name">AWS</span>
+                                        <span class="tech-percentage">20%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!-- D-Frames Project -->
                 <div class="project-card" data-collapsed="true">
                     <div class="project-header toggle-header">
-                        <h3 class="project-title">D-Frames <span class="work-in-progress">Currently Working On</span></h3>
+                        <h3 class="project-title">D-Frames <a href="#roadmap" class="work-in-progress">In Progress</a></h3>
                         <div class="project-links">
                             <a href="https://d-frames-clean.vercel.app" target="_blank" class="project-link">Live Demo</a>
                             <a href="#" class="project-link">GitHub</a>
@@ -304,119 +562,60 @@
                                 <li>Responsive design optimized for all devices</li>
                                 <li>Advanced filtering and search functionality</li>
                             </ul>
-                            <h4>Challenges & Solutions:</h4>
-                            <p>Implementing the payment API integration presented unique challenges with transaction security and user flow. I developed a custom middleware solution to handle payment verification and order processing seamlessly.</p>
-                        </div>
-                        <div class="tech-chart-container">
-                            <h4>Technologies Used:</h4>
-                            <div class="tech-chart">
-                                <div class="tech-bar" data-tech="React" data-percentage="35">
-                                    <div class="tech-fill" style="width: 35%"></div>
-                                    <span class="tech-name">React</span>
-                                    <span class="tech-percentage">35%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="Node.js" data-percentage="25">
-                                    <div class="tech-fill" style="width: 25%"></div>
-                                    <span class="tech-name">Node.js</span>
-                                    <span class="tech-percentage">25%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="PostgreSQL" data-percentage="20">
-                                    <div class="tech-fill" style="width: 20%"></div>
-                                    <span class="tech-name">PostgreSQL</span>
-                                    <span class="tech-percentage">20%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="Payment APIs" data-percentage="15">
-                                    <div class="tech-fill" style="width: 15%"></div>
-                                    <span class="tech-name">Payment APIs</span>
-                                    <span class="tech-percentage">15%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="CSS/SCSS" data-percentage="5">
-                                    <div class="tech-fill" style="width: 5%"></div>
-                                    <span class="tech-name">CSS/SCSS</span>
-                                    <span class="tech-percentage">5%</span>
-                                </div>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- NeuralNFT Project -->
-                <div class="project-card" data-collapsed="true">
-                    <div class="project-header toggle-header">
-                        <h3 class="project-title">NeuralNFT <span class="work-in-progress">Currently Working On</span></h3>
-                        <div class="project-links">
-                            <a href="https://neural-nft.vercel.app" target="_blank" class="project-link">Live Demo</a>
-                            <a href="https://github.com/tobidontplay/NeuralNFT" class="project-link">GitHub</a>
-                            <button class="toggle-btn" aria-label="Toggle project details">+</button>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-preview">
-                        <div class="project-image-container">
-                            <iframe src="https://neural-nft.vercel.app" title="NeuralNFT Live Preview" class="project-iframe"></iframe>
-                        </div>
-                    </div>
-                    <div class="project-details">
-                        <div class="project-description">
-                            <p><strong>NeuralNFT</strong> is an innovative platform showcasing my expertise in three key technologies:</p>
-                            <h4>Key Features:</h4>
-                            <ul>
-                                <li><strong>AI-powered art generation</strong> using TensorFlow.js with customizable style parameters</li>
-                                <li><strong>Ethereum blockchain integration</strong> with secure smart contracts for NFT ownership</li>
-                                <li><strong>Cloud-optimized infrastructure</strong> for scalable performance and reliability</li>
-                                <li><strong>Automated royalty system</strong> ensuring creators receive compensation for secondary sales</li>
-                            </ul>
-                            <h4>Challenges & Solutions:</h4>
-                            <p>The primary challenge was creating a seamless integration between these three complex technologies. I developed a modular architecture that allows each component to scale independently while maintaining efficient communication between the AI generation system, blockchain transactions, and cloud infrastructure.</p>
                         </div>
                         <div class="tech-chart-container">
                             <h4>Technologies Used:</h4>
                             <div class="tech-pillars">
                                 <div class="tech-pillar">
-                                    <h4 class="tech-pillar-title"><span class="highlight-ai">AI</span></h4>
-                                    <p>Custom StyleGAN-inspired neural network for generating unique digital artwork with controllable style parameters</p>
+                                    <h4 class="tech-pillar-title"><span class="highlight-ai">E-Commerce</span></h4>
+                                    <p>Comprehensive e-commerce platform with product catalog, shopping cart, and secure checkout functionality</p>
                                 </div>
                                 <div class="tech-pillar">
-                                    <h4 class="tech-pillar-title"><span class="highlight-blockchain">Blockchain</span></h4>
-                                    <p>Smart contract development with Solidity, implementing ERC-721 tokens with royalty mechanisms and marketplace functionality</p>
+                                    <h4 class="tech-pillar-title"><span class="highlight-blockchain">Payment Processing</span></h4>
+                                    <p>Secure payment gateway integration with multiple payment methods and transaction management</p>
                                 </div>
                                 <div class="tech-pillar">
-                                    <h4 class="tech-pillar-title"><span class="highlight-cloud">Cloud Computing</span></h4>
-                                    <p>Scalable architecture designed for cloud deployment with optimized resource utilization and distributed processing</p>
+                                    <h4 class="tech-pillar-title"><span class="highlight-cloud">Database Design</span></h4>
+                                    <p>Robust PostgreSQL database architecture with optimized queries and efficient data management</p>
                                 </div>
                             </div>
                             <div class="tech-chart">
-                                <div class="tech-bar" data-tech="React" data-percentage="30">
+                                <div class="tech-bar" data-tech="Next.js" data-percentage="30">
                                     <div class="tech-fill" style="width: 30%"></div>
-                                    <span class="tech-name">React</span>
+                                    <span class="tech-name">Next.js</span>
                                     <span class="tech-percentage">30%</span>
                                 </div>
-                                <div class="tech-bar" data-tech="TensorFlow.js" data-percentage="25">
+                                <div class="tech-bar" data-tech="PostgreSQL" data-percentage="25">
                                     <div class="tech-fill" style="width: 25%"></div>
-                                    <span class="tech-name">TensorFlow.js</span>
+                                    <span class="tech-name">PostgreSQL</span>
                                     <span class="tech-percentage">25%</span>
                                 </div>
-                                <div class="tech-bar" data-tech="Solidity" data-percentage="25">
-                                    <div class="tech-fill" style="width: 25%"></div>
-                                    <span class="tech-name">Solidity</span>
-                                    <span class="tech-percentage">25%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="Node.js" data-percentage="20">
+                                <div class="tech-bar" data-tech="Stripe" data-percentage="20">
                                     <div class="tech-fill" style="width: 20%"></div>
-                                    <span class="tech-name">Node.js</span>
+                                    <span class="tech-name">Stripe</span>
                                     <span class="tech-percentage">20%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="Tailwind CSS" data-percentage="15">
+                                    <div class="tech-fill" style="width: 15%"></div>
+                                    <span class="tech-name">Tailwind CSS</span>
+                                    <span class="tech-percentage">15%</span>
+                                </div>
+                                <div class="tech-bar" data-tech="Prisma" data-percentage="10">
+                                    <div class="tech-fill" style="width: 10%"></div>
+                                    <span class="tech-name">Prisma</span>
+                                    <span class="tech-percentage">10%</span>
                                 </div>
                             </div>
                         </div>
-                        </div>
+
                     </div>
+                </div>
                 </div>
                 
                 <!-- Midnight Shayo Project -->
-                <div class="project-card" data-collapsed="true">
+                <div class="project-card">
                     <div class="project-header toggle-header">
-                        <h3 class="project-title">Midnight Shayo <span class="work-in-progress">Currently Working On</span></h3>
+                        <h3 class="project-title">Midnight Shayo <a href="#roadmap" class="work-in-progress">In Progress</a></h3>
                         <div class="project-links">
                             <a href="https://shayo-culture-vibes-web.vercel.app" target="_blank" class="project-link">Live Demo</a>
                             <a href="https://github.com/tobidontplay/shayo-culture-vibes-web" target="_blank" class="project-link">GitHub</a>
@@ -425,60 +624,69 @@
                     </div>
                     <div class="project-content">
                         <div class="project-preview">
-                        <div class="project-image-container">
-                            <iframe src="https://shayo-culture-vibes-web.vercel.app" title="Midnight Shayo Live Preview" class="project-iframe"></iframe>
+                            <div class="project-image-container">
+                                <iframe src="https://shayo-culture-vibes-web.vercel.app" title="Midnight Shayo Live Preview" class="project-iframe"></iframe>
+                            </div>
                         </div>
-                    </div>
-                    <div class="project-details">
-                        <div class="project-description">
-                            <p>Midnight Shayo is an innovative web application that showcases advanced front-end development techniques and interactive user experiences.</p>
-                            <h4>Key Features:</h4>
-                            <ul>
-                                <li>Dynamic content rendering with state-of-the-art animations</li>
-                                <li>Custom-built component library for consistent UI/UX</li>
-                                <li>Optimized performance with lazy loading and code splitting</li>
-                                <li>Comprehensive testing suite ensuring reliability</li>
-                            </ul>
-                            <h4>Challenges & Solutions:</h4>
-                            <p>Creating fluid animations while maintaining performance was a significant challenge. I implemented a custom animation framework that leverages hardware acceleration and optimized rendering cycles to achieve smooth 60fps animations even on mobile devices.</p>
-                        </div>
-                        <div class="tech-chart-container">
-                            <h4>Technologies Used:</h4>
-                            <div class="tech-chart">
-                                <div class="tech-bar" data-tech="JavaScript" data-percentage="40">
-                                    <div class="tech-fill" style="width: 40%"></div>
-                                    <span class="tech-name">JavaScript</span>
-                                    <span class="tech-percentage">40%</span>
+                        <div class="project-details">
+                            <div class="project-description">
+                                <p>Shayo Culture Vibes is a dynamic cultural platform that celebrates and showcases diverse cultural experiences and traditions.</p>
+                                <h4>Key Features:</h4>
+                                <ul>
+                                    <li>Interactive cultural content</li>
+                                    <li>Media gallery and storytelling</li>
+                                    <li>Community engagement tools</li>
+                                    <li>Events management system</li>
+                                </ul>
+                                <p>The primary challenge was creating a seamless integration between various technologies. I developed a modular architecture that allows each component to scale independently while maintaining efficient communication between the frontend, media systems, and community features.</p>
+                            </div>
+                            <div class="tech-chart-container">
+                                <h4>Technologies Used:</h4>
+                                <div class="tech-pillars">
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-ai">Frontend</span></h4>
+                                        <p>Modern React-based UI with responsive design and interactive components for cultural content presentation</p>
+                                    </div>
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-blockchain">Media Integration</span></h4>
+                                        <p>Advanced media gallery with optimized loading and streaming capabilities for cultural artifacts and storytelling</p>
+                                    </div>
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-cloud">Community Features</span></h4>
+                                        <p>Robust community engagement tools with user authentication, profiles, and interactive discussion forums</p>
+                                    </div>
                                 </div>
-                                <div class="tech-bar" data-tech="React" data-percentage="30">
-                                    <div class="tech-fill" style="width: 30%"></div>
-                                    <span class="tech-name">React</span>
-                                    <span class="tech-percentage">30%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="Three.js" data-percentage="15">
-                                    <div class="tech-fill" style="width: 15%"></div>
-                                    <span class="tech-name">Three.js</span>
-                                    <span class="tech-percentage">15%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="CSS/SCSS" data-percentage="10">
-                                    <div class="tech-fill" style="width: 10%"></div>
-                                    <span class="tech-name">CSS/SCSS</span>
-                                    <span class="tech-percentage">10%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="WebGL" data-percentage="5">
-                                    <div class="tech-fill" style="width: 5%"></div>
-                                    <span class="tech-name">WebGL</span>
-                                    <span class="tech-percentage">5%</span>
+                                <div class="tech-chart">
+                                    <div class="tech-bar" data-tech="Next.js" data-percentage="35">
+                                        <div class="tech-fill" style="width: 35%"></div>
+                                        <span class="tech-name">Next.js</span>
+                                        <span class="tech-percentage">35%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="Tailwind CSS" data-percentage="25">
+                                        <div class="tech-fill" style="width: 25%"></div>
+                                        <span class="tech-name">Tailwind CSS</span>
+                                        <span class="tech-percentage">25%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="Supabase" data-percentage="20">
+                                        <div class="tech-fill" style="width: 20%"></div>
+                                        <span class="tech-name">Supabase</span>
+                                        <span class="tech-percentage">20%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="TypeScript" data-percentage="20">
+                                        <div class="tech-fill" style="width: 20%"></div>
+                                        <span class="tech-name">TypeScript</span>
+                                        <span class="tech-percentage">20%</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        </div>
                     </div>
                 </div>
+
                 <!-- FloodSpy Project -->
-                <div class="project-card" data-collapsed="true">
+                <div class="project-card">
                     <div class="project-header toggle-header">
-                        <h3 class="project-title">FloodSpy <span class="work-in-progress">Currently Working On</span></h3>
+                        <h3 class="project-title">FloodSpy <a href="#roadmap" class="work-in-progress">In Progress</a></h3>
                         <div class="project-links">
                             <a href="https://floodspy.vercel.app" target="_blank" class="project-link">Live Demo</a>
                             <a href="https://github.com/tobidontplay/floodspy" target="_blank" class="project-link">GitHub</a>
@@ -487,66 +695,64 @@
                     </div>
                     <div class="project-content">
                         <div class="project-preview">
-                        <div class="project-image-container">
-                            <iframe src="https://floodspy.vercel.app" title="FloodSpy Live Preview" class="project-iframe"></iframe>
-                        </div>
-                    </div>
-                    <div class="project-details">
-                        <div class="project-description">
-                            <p><strong>FloodSpy</strong> is a comprehensive flood monitoring and analytics platform focused on Nigeria, providing real-time data visualization and predictive insights.</p>
-                            <h4>Challenges & Solutions:</h4>
-                            <p>Integrating multiple data sources and creating a reliable prediction model presented significant challenges. I implemented a custom data pipeline with Supabase for real-time updates and developed a machine learning model for flood risk prediction based on historical patterns and environmental factors.</p>
-                        </div>
-                        <div class="tech-chart-container">
-                            <h4>Technologies Used:</h4>
-                            <div class="tech-pillars">
-                                <div class="tech-pillar">
-                                    <h4 class="tech-pillar-title"><span class="highlight-ai">Data Analytics</span></h4>
-                                    <p>Advanced data processing pipeline with real-time analytics, predictive modeling for flood risk assessment, and machine learning algorithms for pattern recognition</p>
-                                </div>
-                                <div class="tech-pillar">
-                                    <h4 class="tech-pillar-title"><span class="highlight-blockchain">Geospatial Mapping</span></h4>
-                                    <p>Interactive mapping system with custom GeoJSON integration, real-time location tracking, and spatial data visualization for flood risk zones</p>
-                                </div>
-                                <div class="tech-pillar">
-                                    <h4 class="tech-pillar-title"><span class="highlight-cloud">Real-time Database</span></h4>
-                                    <p>Supabase-powered backend with real-time data synchronization, community reporting system, and secure authentication for crowdsourced information</p>
-                                </div>
-                            </div>
-                            <div class="tech-chart-spacer"></div>
-                            <div class="tech-chart">
-                                <div class="tech-bar" data-tech="Next.js" data-percentage="30">
-                                    <div class="tech-fill" style="width: 30%"></div>
-                                    <span class="tech-name">Next.js</span>
-                                    <span class="tech-percentage">30%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="Supabase" data-percentage="25">
-                                    <div class="tech-fill" style="width: 25%"></div>
-                                    <span class="tech-name">Supabase</span>
-                                    <span class="tech-percentage">25%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="Tailwind CSS" data-percentage="15">
-                                    <div class="tech-fill" style="width: 15%"></div>
-                                    <span class="tech-name">Tailwind CSS</span>
-                                    <span class="tech-percentage">15%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="Leaflet/Mapbox" data-percentage="15">
-                                    <div class="tech-fill" style="width: 15%"></div>
-                                    <span class="tech-name">Leaflet/Mapbox</span>
-                                    <span class="tech-percentage">15%</span>
-                                </div>
-                                <div class="tech-bar" data-tech="ML Models" data-percentage="15">
-                                    <div class="tech-fill" style="width: 15%"></div>
-                                    <span class="tech-name">ML Models</span>
-                                    <span class="tech-percentage">15%</span>
-                                </div>
+                            <div class="project-image-container">
+                                <iframe src="https://floodspy.vercel.app" title="FloodSpy Live Preview" class="project-iframe"></iframe>
                             </div>
                         </div>
+                        <div class="project-details">
+                            <div class="project-description">
+                                <p><strong>FloodSpy</strong> is a comprehensive flood monitoring and analytics platform focused on Nigeria, providing real-time data visualization and predictive insights.</p>
+                                <h4>Challenges & Solutions:</h4>
+                                <p>Integrating multiple data sources and creating a reliable prediction model presented significant challenges. I implemented a custom data pipeline with Supabase for real-time updates and developed a machine learning model for flood risk prediction based on historical patterns and environmental factors.</p>
+                            </div>
+                            <div class="tech-chart-container">
+                                <h4>Technologies Used:</h4>
+                                <div class="tech-pillars">
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-ai">Data Analytics</span></h4>
+                                        <p>Advanced data processing pipeline with real-time analytics, predictive modeling for flood risk assessment, and machine learning algorithms for pattern recognition</p>
+                                    </div>
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-blockchain">Geospatial Mapping</span></h4>
+                                        <p>Interactive mapping system with custom GeoJSON integration, real-time location tracking, and spatial data visualization for flood risk zones</p>
+                                    </div>
+                                    <div class="tech-pillar">
+                                        <h4 class="tech-pillar-title"><span class="highlight-cloud">Real-time Database</span></h4>
+                                        <p>Supabase-powered backend with real-time data synchronization, community reporting system, and secure authentication for crowdsourced information</p>
+                                    </div>
+                                </div>
+                                <div class="tech-chart-spacer"></div>
+                                <div class="tech-chart">
+                                    <div class="tech-bar" data-tech="Next.js" data-percentage="30">
+                                        <div class="tech-fill" style="width: 30%"></div>
+                                        <span class="tech-name">Next.js</span>
+                                        <span class="tech-percentage">30%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="Supabase" data-percentage="25">
+                                        <div class="tech-fill" style="width: 25%"></div>
+                                        <span class="tech-name">Supabase</span>
+                                        <span class="tech-percentage">25%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="Tailwind CSS" data-percentage="15">
+                                        <div class="tech-fill" style="width: 15%"></div>
+                                        <span class="tech-name">Tailwind CSS</span>
+                                        <span class="tech-percentage">15%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="Leaflet/Mapbox" data-percentage="15">
+                                        <div class="tech-fill" style="width: 15%"></div>
+                                        <span class="tech-name">Leaflet/Mapbox</span>
+                                        <span class="tech-percentage">15%</span>
+                                    </div>
+                                    <div class="tech-bar" data-tech="ML Models" data-percentage="15">
+                                        <div class="tech-fill" style="width: 15%"></div>
+                                        <span class="tech-name">ML Models</span>
+                                        <span class="tech-percentage">15%</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
     </section>
@@ -558,7 +764,7 @@
                 <!-- FloodSpy Weather Project -->
                 <div class="project-card" data-collapsed="true">
                     <div class="project-header toggle-header">
-                        <h3 class="project-title">FloodSpy Weather <span class="work-in-progress">Currently Working On</span></h3>
+                        <h3 class="project-title">FloodSpy Weather <a href="#roadmap" class="work-in-progress">In Progress</a></h3>
                         <div class="project-links">
                             <a href="https://floodspyweather.vercel.app" target="_blank" class="project-link">Live Demo</a>
                             <a href="https://github.com/tobidontplay/floodspyweather" target="_blank" class="project-link">GitHub</a>
@@ -629,6 +835,258 @@
         </div>
     </section>
 
+    <section id="roadmap" class="roadmap-section">
+        <div class="container">
+            <h2 class="section-title">Project Roadmap</h2>
+            <div class="roadmap-grid">
+                <!-- D-Frames Roadmap -->
+                <div class="roadmap-card" data-collapsed="true">
+                    <div class="roadmap-header toggle-header">
+                        <h3 class="roadmap-title">D-Frames</h3>
+                        <span class="project-status"></span>
+                        <button class="toggle-btn" aria-label="Toggle roadmap details">+</button>
+                        <span class="project-status-text">60% Complete</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 60%"></div>
+                    </div>
+                    <div class="milestone-list">
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">January 2025</div>
+                                <div class="milestone-title">Project Inception</div>
+                                <div class="milestone-desc">Started with the core e-commerce functionality and basic product catalog. Implemented responsive design and basic user authentication.</div>
+                            </div>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">February 2025</div>
+                                <div class="milestone-title">Database Integration</div>
+                                <div class="milestone-desc">Integrated PostgreSQL database for robust product and user management. Implemented data modeling and schema design.</div>
+                            </div>
+                        </div>
+                        <div class="milestone in-progress">
+                            <div class="milestone-content">
+                                <div class="milestone-date">March 2025</div>
+                                <div class="milestone-title">Payment Processing</div>
+                                <div class="milestone-desc">Implementing secure payment gateway with Stripe integration and multiple payment methods.</div>
+                            </div>
+                        </div>
+                        <div class="milestone upcoming">
+                            <div class="milestone-content">
+                                <div class="milestone-date">April 2025</div>
+                                <div class="milestone-title">Inventory Management</div>
+                                <div class="milestone-desc">Advanced inventory tracking and management system with real-time updates.</div>
+                            </div>
+                        </div>
+                        <div class="milestone upcoming">
+                            <div class="milestone-content">
+                                <div class="milestone-date">May 2025</div>
+                                <div class="milestone-title">Analytics Dashboard</div>
+                                <div class="milestone-desc">Comprehensive analytics dashboard for sales tracking and customer insights.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://github.com/tobidontplay/d-frames" class="repo-link">View Repository</a>
+                </div>
+                
+                <!-- Midnight Shayo Roadmap -->
+                <div class="roadmap-card" data-collapsed="true">
+                    <div class="roadmap-header toggle-header">
+                        <h3 class="roadmap-title">Midnight Shayo</h3>
+                        <span class="project-status"></span>
+                        <button class="toggle-btn" aria-label="Toggle roadmap details">+</button>
+                        <span class="project-status-text">70% Complete</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 70%"></div>
+                    </div>
+                    <div class="milestone-list">
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">December 2024</div>
+                                <div class="milestone-title">Platform Design</div>
+                                <div class="milestone-desc">Initial UI/UX design and platform architecture planning.</div>
+                            </div>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">January 2025</div>
+                                <div class="milestone-title">Core Development</div>
+                                <div class="milestone-desc">Implementation of core platform features and responsive design.</div>
+                            </div>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">February 2025</div>
+                                <div class="milestone-title">Media Integration</div>
+                                <div class="milestone-desc">Advanced media gallery with optimized loading and streaming capabilities.</div>
+                            </div>
+                        </div>
+                        <div class="milestone in-progress">
+                            <div class="milestone-content">
+                                <div class="milestone-date">March 2025</div>
+                                <div class="milestone-title">Community Features</div>
+                                <div class="milestone-desc">User authentication, profiles, and interactive discussion forums.</div>
+                            </div>
+                        </div>
+                        <div class="milestone upcoming">
+                            <div class="milestone-content">
+                                <div class="milestone-date">April 2025</div>
+                                <div class="milestone-title">Events Calendar</div>
+                                <div class="milestone-desc">Implementation of cultural events calendar and booking system.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FloodSpy Roadmap -->
+                <div class="roadmap-card" data-collapsed="true">
+                    <div class="roadmap-header toggle-header">
+                        <h3 class="roadmap-title">FloodSpy</h3>
+                        <span class="project-status"></span>
+                        <button class="toggle-btn" aria-label="Toggle roadmap details">+</button>
+                        <span class="project-status-text">65% Complete</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 65%"></div>
+                    </div>
+                    <div class="milestone-list">
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">November 2024</div>
+                                <div class="milestone-title">Data Architecture</div>
+                                <div class="milestone-desc">Design of data models and integration with multiple data sources.</div>
+                            </div>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">December 2024</div>
+                                <div class="milestone-title">Mapping Integration</div>
+                                <div class="milestone-desc">Implementation of interactive mapping system with GeoJSON integration.</div>
+                            </div>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">January 2025</div>
+                                <div class="milestone-title">Real-time Database</div>
+                                <div class="milestone-desc">Supabase integration with real-time data synchronization.</div>
+                            </div>
+                        </div>
+                        <div class="milestone in-progress">
+                            <div class="milestone-content">
+                                <div class="milestone-date">February 2025</div>
+                                <div class="milestone-title">Predictive Analytics</div>
+                                <div class="milestone-desc">Machine learning model for flood risk prediction based on historical patterns.</div>
+                            </div>
+                        </div>
+                        <div class="milestone upcoming">
+                            <div class="milestone-content">
+                                <div class="milestone-date">March 2025</div>
+                                <div class="milestone-title">Community Reporting</div>
+                                <div class="milestone-desc">Implementation of crowdsourced flood reporting system.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- NeuralNFT Roadmap -->
+                <div class="roadmap-card" data-collapsed="true">
+                    <div class="roadmap-header toggle-header">
+                        <h3 class="roadmap-title">NeuralNFT</h3>
+                        <span class="project-status"></span>
+                        <button class="toggle-btn" aria-label="Toggle roadmap details">+</button>
+                        <span class="project-status-text">50% Complete</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 50%"></div>
+                    </div>
+                    <div class="milestone-list">
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">December 2024</div>
+                                <div class="milestone-title">AI Model Development</div>
+                                <div class="milestone-desc">Development of StyleGAN-inspired neural network for digital art generation.</div>
+                            </div>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">January 2025</div>
+                                <div class="milestone-title">Smart Contract Design</div>
+                                <div class="milestone-desc">Implementation of ERC-721 tokens with royalty mechanisms.</div>
+                            </div>
+                        </div>
+                        <div class="milestone in-progress">
+                            <div class="milestone-content">
+                                <div class="milestone-date">February 2025</div>
+                                <div class="milestone-title">Frontend Integration</div>
+                                <div class="milestone-desc">React-based UI for NFT creation, viewing, and marketplace.</div>
+                            </div>
+                        </div>
+                        <div class="milestone upcoming">
+                            <div class="milestone-content">
+                                <div class="milestone-date">March 2025</div>
+                                <div class="milestone-title">Marketplace Development</div>
+                                <div class="milestone-desc">Implementation of NFT marketplace with bidding and purchasing.</div>
+                            </div>
+                        </div>
+                        <div class="milestone upcoming">
+                            <div class="milestone-content">
+                                <div class="milestone-date">April 2025</div>
+                                <div class="milestone-title">Cloud Deployment</div>
+                                <div class="milestone-desc">Scalable cloud architecture deployment with optimized resource utilization.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FloodSpy Weather Roadmap -->
+                <div class="roadmap-card" data-collapsed="true">
+                    <div class="roadmap-header toggle-header">
+                        <h3 class="roadmap-title">FloodSpy Weather</h3>
+                        <span class="project-status"></span>
+                        <button class="toggle-btn" aria-label="Toggle roadmap details">+</button>
+                        <span class="project-status-text">75% Complete</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="milestone-list">
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">March 2025</div>
+                                <div class="milestone-title">Weather API</div>
+                                <div class="milestone-desc">Integration with weather data sources</div>
+                            </div>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">April 2025</div>
+                                <div class="milestone-title">Flood Prediction</div>
+                                <div class="milestone-desc">ML-based flood risk assessment system</div>
+                            </div>
+                        </div>
+                        <div class="milestone completed">
+                            <div class="milestone-content">
+                                <div class="milestone-date">May 2025</div>
+                                <div class="milestone-title">Alert System</div>
+                                <div class="milestone-desc">Real-time notifications and warnings</div>
+                            </div>
+                        </div>
+                        <div class="milestone in-progress">
+                            <div class="milestone-content">
+                                <div class="milestone-date">May 2025 - Present</div>
+                                <div class="milestone-title">Data Analytics</div>
+                                <div class="milestone-desc">Advanced analytics and reporting features</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="https://github.com/tobidontplay/floodspyweather-" class="repo-link">View Repository</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="contact" class="contact-section">
         <div class="container">
             <h2 class="section-title">Contact Me</h2>
@@ -648,6 +1106,7 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js"></script>
 </body>
 </html>

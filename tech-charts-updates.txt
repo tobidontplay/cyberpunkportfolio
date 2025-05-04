@@ -1,0 +1,163 @@
+// Project 1: Shayo Culture Vibes (Line 304)
+<div class="tech-chart-container">
+    <h4>Technologies Used:</h4>
+    <div class="tech-pillars">
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-ai">Frontend</span></h4>
+            <p>Modern React-based UI with responsive design and interactive components for cultural content presentation</p>
+        </div>
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-blockchain">Media Integration</span></h4>
+            <p>Advanced media gallery with optimized loading and streaming capabilities for cultural artifacts and storytelling</p>
+        </div>
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-cloud">Community Features</span></h4>
+            <p>Robust community engagement tools with user authentication, profiles, and interactive discussion forums</p>
+        </div>
+    </div>
+    <div class="tech-chart">
+        <div class="tech-bar" data-tech="Next.js" data-percentage="35">
+            <div class="tech-fill" style="width: 35%"></div>
+            <span class="tech-name">Next.js</span>
+            <span class="tech-percentage">35%</span>
+        </div>
+        <div class="tech-bar" data-tech="Tailwind CSS" data-percentage="25">
+            <div class="tech-fill" style="width: 25%"></div>
+            <span class="tech-name">Tailwind CSS</span>
+            <span class="tech-percentage">25%</span>
+        </div>
+        <div class="tech-bar" data-tech="Supabase" data-percentage="20">
+            <div class="tech-fill" style="width: 20%"></div>
+            <span class="tech-name">Supabase</span>
+            <span class="tech-percentage">20%</span>
+        </div>
+        <div class="tech-bar" data-tech="TypeScript" data-percentage="20">
+            <div class="tech-fill" style="width: 20%"></div>
+            <span class="tech-name">TypeScript</span>
+            <span class="tech-percentage">20%</span>
+        </div>
+    </div>
+</div>
+
+// Project 2: NeuralNFT (Line 333)
+<div class="tech-chart-container">
+    <h4>Technologies Used:</h4>
+    <div class="tech-pillars">
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-ai">AI</span></h4>
+            <p>Custom StyleGAN-inspired neural network for generating unique digital artwork with controllable style parameters</p>
+        </div>
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-blockchain">Blockchain</span></h4>
+            <p>Smart contract development with Solidity, implementing ERC-721 tokens with royalty mechanisms and marketplace functionality</p>
+        </div>
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-cloud">Cloud Computing</span></h4>
+            <p>Scalable architecture designed for cloud deployment with optimized resource utilization and distributed processing</p>
+        </div>
+    </div>
+    <div class="tech-chart">
+        <div class="tech-bar" data-tech="React" data-percentage="30">
+            <div class="tech-fill" style="width: 30%"></div>
+            <span class="tech-name">React</span>
+            <span class="tech-percentage">30%</span>
+        </div>
+        <div class="tech-bar" data-tech="TensorFlow.js" data-percentage="25">
+            <div class="tech-fill" style="width: 25%"></div>
+            <span class="tech-name">TensorFlow.js</span>
+            <span class="tech-percentage">25%</span>
+        </div>
+        <div class="tech-bar" data-tech="Solidity" data-percentage="25">
+            <div class="tech-fill" style="width: 25%"></div>
+            <span class="tech-name">Solidity</span>
+            <span class="tech-percentage">25%</span>
+        </div>
+        <div class="tech-bar" data-tech="Node.js" data-percentage="20">
+            <div class="tech-fill" style="width: 20%"></div>
+            <span class="tech-name">Node.js</span>
+            <span class="tech-percentage">20%</span>
+        </div>
+    </div>
+</div>
+
+// Project 3: FloodSpy Weather (Line 372)
+<div class="tech-chart-container">
+    <h4>Technologies Used:</h4>
+    <div class="tech-pillars">
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-ai">Data Analytics</span></h4>
+            <p>Advanced data processing pipeline with real-time analytics, predictive modeling for weather patterns, and machine learning algorithms</p>
+        </div>
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-blockchain">Weather APIs</span></h4>
+            <p>Integration with multiple weather data sources, real-time data synchronization, and custom weather prediction algorithms</p>
+        </div>
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-cloud">Visualization</span></h4>
+            <p>Interactive weather maps, real-time data visualization, and custom charting components for weather data analysis</p>
+        </div>
+    </div>
+    <div class="tech-chart">
+        <div class="tech-bar" data-tech="Python" data-percentage="35">
+            <div class="tech-fill" style="width: 35%"></div>
+            <span class="tech-name">Python</span>
+            <span class="tech-percentage">35%</span>
+        </div>
+        <div class="tech-bar" data-tech="React" data-percentage="25">
+            <div class="tech-fill" style="width: 25%"></div>
+            <span class="tech-name">React</span>
+            <span class="tech-percentage">25%</span>
+        </div>
+        <div class="tech-bar" data-tech="D3.js" data-percentage="20">
+            <div class="tech-fill" style="width: 20%"></div>
+            <span class="tech-name">D3.js</span>
+            <span class="tech-percentage">20%</span>
+        </div>
+        <div class="tech-bar" data-tech="FastAPI" data-percentage="20">
+            <div class="tech-fill" style="width: 20%"></div>
+            <span class="tech-name">FastAPI</span>
+            <span class="tech-percentage">20%</span>
+        </div>
+    </div>
+</div>
+
+// Project 4: FloodSpy Mobile (Line 411)
+<div class="tech-chart-container">
+    <h4>Technologies Used:</h4>
+    <div class="tech-pillars">
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-ai">Mobile Development</span></h4>
+            <p>Cross-platform mobile application with native performance, offline capabilities, and responsive UI for various device sizes</p>
+        </div>
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-blockchain">Location Services</span></h4>
+            <p>Real-time GPS tracking, geofencing for flood alerts, and location-based community reporting features</p>
+        </div>
+        <div class="tech-pillar">
+            <h4 class="tech-pillar-title"><span class="highlight-cloud">Push Notifications</span></h4>
+            <p>Emergency alert system with prioritized notifications, customizable alert preferences, and location-based warning delivery</p>
+        </div>
+    </div>
+    <div class="tech-chart">
+        <div class="tech-bar" data-tech="React Native" data-percentage="40">
+            <div class="tech-fill" style="width: 40%"></div>
+            <span class="tech-name">React Native</span>
+            <span class="tech-percentage">40%</span>
+        </div>
+        <div class="tech-bar" data-tech="Firebase" data-percentage="25">
+            <div class="tech-fill" style="width: 25%"></div>
+            <span class="tech-name">Firebase</span>
+            <span class="tech-percentage">25%</span>
+        </div>
+        <div class="tech-bar" data-tech="Redux" data-percentage="20">
+            <div class="tech-fill" style="width: 20%"></div>
+            <span class="tech-name">Redux</span>
+            <span class="tech-percentage">20%</span>
+        </div>
+        <div class="tech-bar" data-tech="MapBox" data-percentage="15">
+            <div class="tech-fill" style="width: 15%"></div>
+            <span class="tech-name">MapBox</span>
+            <span class="tech-percentage">15%</span>
+        </div>
+    </div>
+</div>
