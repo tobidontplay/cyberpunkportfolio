@@ -229,6 +229,19 @@ document.getElementById("contact-form").addEventListener("submit", function (e) 
   })
 })
 
+// Collapsible Project Cards
+document.addEventListener('DOMContentLoaded', function() {
+  const projectToggles = document.querySelectorAll('.project-toggle');
+
+  projectToggles.forEach(toggle => {
+    toggle.addEventListener('click', function() {
+      const projectCard = this.closest('.project-card');
+      if (projectCard) {
+        projectCard.classList.toggle('collapsed');
+      }
+    });
+  });
+});
 
 // Skills Category Filtering
 document.addEventListener('DOMContentLoaded', function() {
