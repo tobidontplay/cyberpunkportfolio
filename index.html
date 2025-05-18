@@ -11,6 +11,7 @@
     <meta property="og:url" content="https://tobiverse.com">
     <title>Tobi's Portfolio | Tobiverse.com</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="app.js" defer></script>
@@ -225,9 +226,11 @@
 </head>
 <body>
     <div id="background-animation"></div>
-    <header class="hero">
-        <nav>
-            <ul>
+    
+    <!-- Fixed Navigation Bar -->
+    <nav class="fixed-nav" id="fixed-nav">
+        <div class="nav-container">
+            <ul class="nav-links" id="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#skills">Skills</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -235,7 +238,15 @@
                 <li><a href="#passion-projects">Passion Projects</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-        </nav>
+        </div>
+    </nav>
+    
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+    
+    <header class="hero" id="home">
         <div class="container">
             <h1 class="glitch" data-text="Tobi's Portfolio">Tobi's Portfolio</h1>
             <p class="tagline">From imagination to the web</p>

@@ -1,29 +1,75 @@
-// Background animation
+// Background animation with performance optimization
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
-const renderer = new THREE.WebGLRenderer()
+
+// Create renderer with alpha and antialias for better quality
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
 renderer.setSize(window.innerWidth, window.innerHeight)
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)) // Limit pixel ratio for performance
 document.getElementById("background-animation").appendChild(renderer.domElement)
 
+// Loading indicator
+const loadingElement = document.createElement('div')
+loadingElement.className = 'loading-animation'
+loadingElement.innerHTML = '<span>Loading</span>'
+document.body.appendChild(loadingElement)
+
+// Determine particle count based on device performance
+const isMobile = window.innerWidth < 768
+const particleCount = isMobile ? 3000 : 8000 // Fewer particles on mobile
+
+// Create particles
 const geometry = new THREE.BufferGeometry()
 const vertices = []
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < particleCount; i++) {
   vertices.push(THREE.MathUtils.randFloatSpread(2000))
   vertices.push(THREE.MathUtils.randFloatSpread(2000))
   vertices.push(THREE.MathUtils.randFloatSpread(2000))
 }
 geometry.setAttribute("position", new THREE.Float32BufferAttribute(vertices, 3))
-const particles = new THREE.Points(geometry, new THREE.PointsMaterial({ color: 0x00ffff, size: 2 }))
+
+// Create particle material with custom size based on device
+const particles = new THREE.Points(
+  geometry, 
+  new THREE.PointsMaterial({ 
+    color: 0x00ffff, 
+    size: isMobile ? 1.5 : 2,
+    transparent: true,
+    opacity: 0.8
+  })
+)
 scene.add(particles)
 
 camera.position.z = 1000
 
-function animate() {
+// Performance variables
+let lastTime = 0
+const targetFPS = isMobile ? 30 : 60 // Lower target FPS on mobile
+const frameInterval = 1000 / targetFPS
+
+// Optimized animation loop with frame rate limiting
+function animate(currentTime = 0) {
   requestAnimationFrame(animate)
-  particles.rotation.x += 0.0005
-  particles.rotation.y += 0.0005
+  
+  // Calculate time delta and limit frame rate
+  const deltaTime = currentTime - lastTime
+  if (deltaTime < frameInterval) return
+  
+  // Adjust for variable frame rates
+  const rotationSpeed = isMobile ? 0.0003 : 0.0005
+  particles.rotation.x += rotationSpeed
+  particles.rotation.y += rotationSpeed
+  
   renderer.render(scene, camera)
+  lastTime = currentTime - (deltaTime % frameInterval)
+  
+  // Remove loading indicator once animation starts
+  if (loadingElement.parentNode) {
+    loadingElement.parentNode.removeChild(loadingElement)
+  }
 }
+
+// Start animation
 animate()
 
 // Resize handler
@@ -33,14 +79,57 @@ window.addEventListener("resize", () => {
   renderer.setSize(window.innerWidth, window.innerHeight)
 })
 
-// Smooth scrolling
-document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-  anchor.addEventListener("click", function (e) {
-    e.preventDefault()
-    document.querySelector(this.getAttribute("href")).scrollIntoView({
-      behavior: "smooth",
-    })
-  })
+// Navigation and UI functionality
+document.addEventListener('DOMContentLoaded', () => {
+  // Fixed navigation functionality
+  const fixedNav = document.getElementById('fixed-nav');
+  const navLinks = document.getElementById('nav-links');
+  const backToTop = document.getElementById('back-to-top');
+  let lastScrollTop = 0;
+  
+  // Scroll event handling
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Show/hide fixed navigation based on scroll direction
+    if (scrollTop > lastScrollTop && scrollTop > 200) {
+      // Scrolling down
+      fixedNav.classList.add('hidden');
+    } else {
+      // Scrolling up
+      fixedNav.classList.remove('hidden');
+    }
+    
+    // Show/hide back to top button
+    if (scrollTop > 500) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+    
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+  });
+  
+  // Back to top button functionality
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+  
+  // Smooth scrolling for all anchor links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute("href"));
+      if (target) {
+        target.scrollIntoView({
+          behavior: "smooth",
+        });
+      }
+    });
+  });
 })
 
 // Intersection Observer for skill card animations
